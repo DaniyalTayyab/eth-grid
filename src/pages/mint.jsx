@@ -1,48 +1,74 @@
 import React, { useEffect, useState } from "react";
-import { getBoxSizes, getSmallBoxes } from "../boxes/boxSizes";
+import {
+  smallBoxes,
+  smallBoxesLength,
+  mediumBoxes,
+  mediumBoxesLength,
+  largeBoxes,
+  largeBoxesLength,
+  ultraBoxes,
+  ultraBoxesLength,
+  boxes,
+} from "../boxes/boxSizes.js";
 import MintCard from "../components/mintCard";
 import "../css/styles.css";
+import { mint } from "../boxes/mintbox.js";
 
 const Mint = () => {
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [mintBoxes, setMintBoxes] = useState([]);
-
+  // console.log("small boxes: ", smallBoxes);
+  // console.log(boxes.length);
   const [smallCtr, setSmallCtr] = useState(0);
   const [mediumCtr, setMediumCtr] = useState(0);
-  const [largeCtr, setLargeCtr] = useState(0);
+  const [largeCtr, setLaregeCtr] = useState(0);
   const [ultraCtr, setUltraCtr] = useState(0);
 
-  const [smallBoxes, setSmallBoxes] = useState([]);
-  const [smallUsed, setSmallUsed] = useState(0);
-
-  const [hidden, setHidden] = useState(false);
-
-  useEffect(() => {
-    setMintBoxes(getBoxSizes());
-    setSmallBoxes(getSmallBoxes());
-  }, []);
-
-  const toMintSmall = () => {
-    let count = 0;
-    for (let i = smallUsed; i < smallBoxes.length; i++) {
-      if (count === smallCtr) {
-        setSmallUsed(smallCtr);
-        break;
-      }
-      // console.log(el);
-      count++;
-    }
-    console.log("small used: ", smallUsed);
-    // for (let el of smallBoxes)
+  const userInfo = {
+    accountNumber: "1234",
   };
 
+  const [mintedSmall, setMintedSmall] = useState(0);
+
   const mintNow = () => {
-    let totalCount = smallCtr;
-    if (totalCount > 3) {
-      alert("1 address can mint maximum 3 boxes!!");
+    let total = smallCtr + mediumCtr + largeCtr + ultraCtr;
+    if (total > 3) {
+      alert("Cannot mint more than three nft per account");
       return;
     }
-    toMintSmall();
+
+    // console.log(smallBoxes);
+
+    let lastSmallMintedBox = smallBoxes
+      .map((box) => box.isUsed)
+      .lastIndexOf(true);
+
+    // console.log("last small minted: ", lastSmallMintedBox);
+
+    // // lastSmallMintedBox = lastSmallMintedBox === -1 ? 0 : lastSmallMintedBox;
+    // console.log("last small minted: ", lastSmallMintedBox);
+
+    // good so far but need to handle zero index issue
+    for (let i = lastSmallMintedBox + 1, j = 0; j < smallCtr; i++, j++) {
+      smallBoxes[i].isUsed = true;
+    }
+
+    // for (let i = 0; i < mediumCtr; i++) {
+    //   mediumBoxes[i].isUsed = true;
+    // }
+
+    // for (let i = 0; i < largeCtr; i++) {
+    //   largeBoxes[i].isUsed = true;
+    // }
+
+    // for (let i = 0; i < ultraCtr; i++) {
+    //   ultraBoxes[i].isUsed = true;
+    // }
+
+    setMintedSmall((current) =>
+      smallBoxes.filter((small) => small.isUsed === true)
+    );
+    console.log("smallminted", mintedSmall);
+    console.log(smallBoxes);
+
     setHidden((current) => !hidden);
   };
 
@@ -50,37 +76,39 @@ const Mint = () => {
     setHidden((current) => !hidden);
   };
 
-  const smallIncrement = () => {
-    setSmallCtr((current) => smallCtr + 1);
+  const handleSmallIncrement = () => {
+    setSmallCtr((current) => current + 1);
   };
 
-  const smallDecrement = () => {
-    setSmallCtr((current) => smallCtr - 1);
+  const handleSmallDecrement = () => {
+    setSmallCtr((current) => current - 1);
   };
 
-  const mediumIncrement = () => {
-    setMediumCtr((current) => mediumCtr + 1);
+  const handleMediumDecrement = () => {
+    setMediumCtr((current) => current - 1);
   };
 
-  const mediumDecrement = () => {
-    setMediumCtr((current) => mediumCtr - 1);
+  const handleMediumIncrement = () => {
+    setMediumCtr((current) => current + 1);
   };
 
-  const largeIncrement = () => {
-    setLargeCtr((current) => largeCtr + 1);
+  const handleLargeIncrement = () => {
+    setLaregeCtr((current) => current + 1);
   };
 
-  const largeDecrement = () => {
-    setLargeCtr((current) => largeCtr - 1);
+  const handleLargeDecrement = () => {
+    setLaregeCtr((current) => current - 1);
   };
 
-  const ultraIncrement = () => {
-    setUltraCtr((current) => ultraCtr + 1);
+  const handleUltraIncrement = () => {
+    setUltraCtr((current) => current + 1);
   };
 
-  const ultraDecrement = () => {
-    setUltraCtr((current) => ultraCtr - 1);
+  const handleUltraDecrement = () => {
+    setUltraCtr((current) => current - 1);
   };
+
+  const [hidden, setHidden] = useState(false);
 
   return (
     <main className="mint">
@@ -90,37 +118,33 @@ const Mint = () => {
           <MintCard
             name="Small"
             counter={smallCtr}
-            incr={smallIncrement}
-            decr={smallDecrement}
-            // boxes={smallBoxes}
+            onIncrement={handleSmallIncrement}
+            onDecrement={handleSmallDecrement}
           />
           <MintCard
             name="Medium"
             counter={mediumCtr}
-            incr={mediumIncrement}
-            decr={mediumDecrement}
-            // boxes={}
+            onIncrement={handleMediumIncrement}
+            onDecrement={handleMediumDecrement}
           />
           <MintCard
             name="Large"
             counter={largeCtr}
-            incr={largeIncrement}
-            decr={largeDecrement}
-            // boxes={largeBoxes}
+            onIncrement={handleLargeIncrement}
+            onDecrement={handleLargeDecrement}
           />
           <MintCard
             name="Ultra"
             counter={ultraCtr}
-            incr={ultraIncrement}
-            decr={ultraDecrement}
-            // boxes={megaBoxes}
+            onIncrement={handleUltraIncrement}
+            onDecrement={handleUltraDecrement}
           />
         </div>
         <div className="mint-container__pricebox">
           <span className="mint-container__pricebox__pricename">
             Total price:
           </span>
-          <div className="mint-container__pricebox__input">{totalPrice}</div>
+          <div className="mint-container__pricebox__input">$200</div>
         </div>
         <span className="seperator"></span>
 

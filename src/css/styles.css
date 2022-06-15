@@ -357,17 +357,17 @@
       cursor: pointer; }
 
 .main {
-  height: 76vh;
-  background-color: #000;
-  padding: 3rem;
-  position: relative; }
+  min-height: 1122px;
+  display: grid;
+  place-items: center; }
   .main__grid-box {
-    display: grid;
-    grid-template-columns: repeat(56, 1fr);
-    grid-template-rows: repeat(90, 1fr);
     background-color: #fff;
-    width: 100%;
-    height: 100%; }
+    height: 95%;
+    width: 95%;
+    background-color: black;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: scroll; }
 
 .hidden {
   display: hidden; }
@@ -478,6 +478,9 @@
 
 .u-mt {
   margin-top: 40rem; }
+
+.inline-block {
+  display: inline-block; }
 
 .account {
   height: 76vh;

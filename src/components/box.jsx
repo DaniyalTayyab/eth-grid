@@ -1,12 +1,41 @@
 import React, { useState } from "react";
 import "../css/styles.css";
 
-const Box = ({ id, row1, row2, col1, col2, size }) => {
-  const styles = {
-    gridRow: `${row1} / ${row2}`,
-    gridColumn: `${col1} / ${col2}`,
-  };
-  return <div key={id} className="box" style={styles}></div>;
+const Box = ({ type, coordinates }) => {
+  return (
+    <div
+      style={{
+        border: "1px solid #fece2f",
+        width:
+          type === "small"
+            ? "20px"
+            : type === "medium"
+            ? "40px"
+            : type === "large"
+            ? "60px"
+            : type === "mega"
+            ? "100px"
+            : type === "ultra"
+            ? "160px"
+            : "20px",
+        height:
+          type === "small"
+            ? "20px"
+            : type === "medium"
+            ? "40px"
+            : type === "large"
+            ? "60px"
+            : type === "mega"
+            ? "100px"
+            : type === "ultra"
+            ? "160px"
+            : "20px",
+        position: "absolute",
+        top: coordinates.top,
+        left: coordinates.left,
+      }}
+    />
+  );
 };
 
 export default Box;

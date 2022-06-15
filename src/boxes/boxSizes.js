@@ -1,4 +1,4 @@
-let boxSizes = [
+let allBoxes = [
   {
     id: 1,
     row1: 1,
@@ -1025,11 +1025,17 @@ let boxSizes = [
   },
 ];
 
-export function getBoxSizes() {
-  boxSizes.forEach((box) => (box.isUsed = false));
-  return boxSizes;
-}
+allBoxes.forEach((box) => (box.isUsed = false));
+export const boxes = allBoxes;
 
-export function getSmallBoxes() {
-  return boxSizes.filter((box) => box.size === "small");
-}
+export const smallBoxes = allBoxes.filter((box) => box.size === "small");
+export const smallBoxesLength = smallBoxes.length;
+
+export const mediumBoxes = allBoxes.filter((box) => box.size === "medium");
+export const mediumBoxesLength = mediumBoxes.length;
+
+export const largeBoxes = allBoxes.filter((box) => box.size === "large");
+export const largeBoxesLength = largeBoxes.length;
+
+export const ultraBoxes = allBoxes.filter((box) => box.size === "ultra");
+export const ultraBoxesLength = ultraBoxes.length;
