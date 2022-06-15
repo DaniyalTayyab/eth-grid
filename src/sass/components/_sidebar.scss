@@ -1,9 +1,9 @@
 .sidebar {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 7rem;
   width: 30rem;
-  height: 100%;
+  height: 95%;
   background: linear-gradient(
     to bottom,
     $color-primary-light,
@@ -17,7 +17,7 @@
 
   &__cross-btn {
     position: absolute;
-    top: 0;
+    top: 10px;
     right: 1rem;
     font-size: 2rem;
     cursor: pointer;
@@ -28,4 +28,81 @@
   &__cross-btn:hover {
     animation: spin 0.15s ease-in-out;
   }
+
+  &__image {
+    height: 15rem;
+    border: 0.5rem solid $color-gold-primary-light;
+    border-radius: 0.8rem;
+    object-fit: fill;
+  }
+
+  &__seperator {
+    border-top: 0.3rem solid $color-gold-primary-light;
+    width: 100%;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+  }
+
+  &__nft-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    &__id-section {
+      flex: 2;
+      font-size: 1.3rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    &__details-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__information-block {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+
+    .flex-wrapper {
+      display: grid;
+      grid-template-columns: 7rem 1fr;
+      justify-content: center;
+      align-items: center;
+      margin: 5px 0;
+    }
+  }
+}
+
+.nft-text {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.nft-id {
+  color: grey;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.info-text {
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.mr {
+  margin-right: 5px;
+}
+
+.outline {
+  border: 1px solid black;
 }

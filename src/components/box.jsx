@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import "../css/styles.css";
 
-const Box = ({ type, coordinates }) => {
+const Box = ({ type, coordinates, handleClick, handleHover }) => {
   return (
     <div
+      onClick={handleClick}
+      onMouseOver={handleHover}
       style={{
         border: "1px solid #fece2f",
         width:

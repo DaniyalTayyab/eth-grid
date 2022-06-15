@@ -2,16 +2,27 @@ import React, { useState } from "react";
 import Box from "../components/box";
 import { tileData } from "../boxes/tiles.js";
 import "../css/styles.css";
+import SideBar from "../components/sidebar";
+import Popup from "../components/popup";
 
 const Home = () => {
   const [hiddenBar, setHiddenBar] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
 
   const handleClick = () => {
-    setHiddenBar(true);
+    setHiddenBar((current) => !hiddenBar);
   };
 
   const handleCross = () => {
-    setHiddenBar(false);
+    setHiddenBar((current) => !hiddenBar);
+  };
+
+  const handleHover = (event) => {
+    setShowPopup((current) => !showPopup);
+    setLeft(event.currentTarget.style.left);
+    setTop(event.currentTarget.style.top);
   };
 
   return (
@@ -25,14 +36,14 @@ const Home = () => {
             occupied={box.occupied}
             url={box.url}
             index={index}
+            handleClick={handleClick}
+            handleHover={handleHover}
           />
         ))}
       </div>
-      <div className={hiddenBar ? "sidebar" : "hidden"}>
-        <div className="sidebar__cross-btn" onClick={handleCross}>
-          &#10005;
-        </div>
-      </div>
+
+      <SideBar hiddenBar={hiddenBar} handleCross={handleCross} />
+      <Popup showPopup={showPopup} top={top} left={left} />
     </main>
   );
 };
